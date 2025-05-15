@@ -1,7 +1,7 @@
 
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { PasswordInput } from "@/components/ui/PasswordInput";
+import PasswordInput from "@/components/ui/PasswordInput";
 import { Button } from "@/components/ui/Button";
 import { Loader2 } from "lucide-react";
 import { AuthContext } from "@/App";

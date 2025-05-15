@@ -13,7 +13,7 @@ interface PasswordInputProps {
   [key: string]: any; // For additional props like aria attributes
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   id,
   name,
   value,

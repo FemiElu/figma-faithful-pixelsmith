@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Loader2, Upload, Lock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "@/hooks/use-toast";
-import { PasswordInput } from "@/components/ui/PasswordInput";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 const Account: React.FC = () => {
   const isMobile = useIsMobile();
