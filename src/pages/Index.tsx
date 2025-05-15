@@ -1,31 +1,68 @@
-import React from "react";
-import Header from "@/components/Header";
-import LoginForm from "@/components/LoginForm";
+
+import React, { useState } from "react";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { TripStatCard } from "@/components/trips/TripStatCard";
+import { TripFilter } from "@/components/trips/TripFilter";
+import { TripDetailCard } from "@/components/trips/TripDetailCard";
+import { FilmstripIcon } from "@/components/icons/FilmstripIcon";
+import { TurnIcon } from "@/components/icons/TurnIcon";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index: React.FC = () => {
-  const handleLoginSubmit = (data: { username: string; password: string }) => {
-    console.log("Form submitted:", data);
-    // Here you would typically handle authentication
+  const [filter, setFilter] = useState({ type: "live", date: new Date().toLocaleDateString('en-US') });
+  const isMobile = useIsMobile();
+
+  const handleFilterChange = (newFilter: { type: string; date: string }) => {
+    setFilter(newFilter);
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      <Header />
-      
-      <main className="flex-1">
-        <section className="flex flex-col items-center max-w-[591px] gap-[37px] mx-auto px-6 py-16">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <h1 className="text-black text-[32px] font-semibold leading-[64px] max-sm:text-[28px] max-sm:leading-[48px]">
-              Complete Your Sign Up Process
-            </h1>
-            <p className="text-[#4B4B4B] text-2xl leading-[38.16px] max-sm:text-xl">
-              Login to complete your registration and experience other opportunity
-            </p>
-          </div>
-          
-          <LoginForm onSubmit={handleLoginSubmit} />
-        </section>
-      </main>
+    <div className="w-full min-h-screen bg-[#F9F9F9]">
+      <div className="flex flex-col md:flex-row">
+        <Sidebar />
+        <main className="flex-1 px-4 py-6 md:pl-[42px] md:pr-[27px] md:pt-[83px] md:pb-0">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-[11px] mb-10">
+            <TripStatCard
+              title="Total No Of Trip"
+              value="200"
+              icon={<FilmstripIcon />}
+            />
+            <TripStatCard
+              title="Turn Position"
+              value="1st"
+              icon={<TurnIcon />}
+            />
+          </section>
+
+          <section>
+            <TripFilter onFilterChange={handleFilterChange} />
+          </section>
+
+          <section className="flex flex-col gap-6 mb-6">
+            <TripDetailCard
+              turnNumber="First Turn"
+              time="08:45 Am"
+              passengerCount={30}
+              adultCount={25}
+              childrenCount={5}
+              packageCount={6}
+              grossAmount="#500,000"
+              netAmount="#400,000"
+            />
+            
+            <TripDetailCard
+              turnNumber="Second Turn"
+              time="08:00 Pm"
+              passengerCount={30}
+              adultCount={25}
+              childrenCount={5}
+              packageCount={6}
+              grossAmount="#500,000"
+              netAmount="#400,000"
+            />
+          </section>
+        </main>
+      </div>
     </div>
   );
 };
