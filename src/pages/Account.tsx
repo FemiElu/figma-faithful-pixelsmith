@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useContext } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/Button";
@@ -6,9 +7,11 @@ import { Loader2, Upload, Lock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "@/hooks/use-toast";
 import PasswordInput from "@/components/ui/PasswordInput";
+import { AuthContext } from "@/context/AuthContext";
 
 const Account: React.FC = () => {
   const isMobile = useIsMobile();
+  const { userData, updateProfileImage, updatePassword } = useContext(AuthContext);
   const [isUploading, setIsUploading] = useState(false);
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -17,18 +20,6 @@ const Account: React.FC = () => {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   
-  // Mock driver data
-  const driverData = {
-    fullName: "John Doe",
-    registrationNumber: "DRV-2023-001",
-    phoneNumber: "+2348012345678",
-    nin: "12345678901",
-    vehicleModel: "Toyota Hiace (2018)",
-    driverLicense: "DRV-LIC-2023-001",
-    address: "123 Main Street, Lagos, Nigeria",
-    profileImage: null
-  };
-
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -53,15 +44,32 @@ const Account: React.FC = () => {
       return;
     }
     
-    // Simulate upload
     setIsUploading(true);
-    setTimeout(() => {
+    
+    // Convert file to base64 string for storage in localStorage
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64Image = reader.result as string;
+      
+      // Update the profile image
+      updateProfileImage(base64Image);
+      
       setIsUploading(false);
       toast({
         title: "Profile image updated",
         description: "Your profile image has been successfully updated",
       });
-    }, 2000);
+    };
+    
+    reader.onerror = () => {
+      setIsUploading(false);
+      toast({
+        title: "Upload failed",
+        description: "There was an error uploading your image",
+        variant: "destructive",
+      });
+    };
   };
   
   const handlePasswordChange = (e: React.FormEvent) => {
@@ -78,10 +86,20 @@ const Account: React.FC = () => {
       return;
     }
     
+    // In a real app, we would verify the current password
+    // For demo, we'll accept any non-empty value
+    if (!currentPassword) {
+      setPasswordError("Please enter your current password");
+      return;
+    }
+    
     setIsChangingPassword(true);
     
     // Simulate API call
     setTimeout(() => {
+      // Update the password
+      updatePassword(newPassword);
+      
       setIsChangingPassword(false);
       setShowPasswordChange(false);
       setCurrentPassword("");
@@ -110,10 +128,16 @@ const Account: React.FC = () => {
               </CardHeader>
               <CardContent className="flex flex-col items-center gap-6">
                 <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden relative flex items-center justify-center">
-                  {driverData.profileImage ? (
-                    <img src={driverData.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                  {userData?.profileImage ? (
+                    <img 
+                      src={userData.profileImage} 
+                      alt="Profile" 
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
-                    <div className="text-6xl text-gray-400">{driverData.fullName.charAt(0)}</div>
+                    <div className="text-6xl text-gray-400">
+                      {userData?.fullName ? userData.fullName.charAt(0) : "U"}
+                    </div>
                   )}
                 </div>
                 
@@ -214,13 +238,13 @@ const Account: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 gap-4">
-                  <InfoItem label="Full Name" value={driverData.fullName} />
-                  <InfoItem label="Registration Number" value={driverData.registrationNumber} />
-                  <InfoItem label="Phone Number" value={driverData.phoneNumber} />
-                  <InfoItem label="NIN" value={driverData.nin} />
-                  <InfoItem label="Vehicle Model" value={driverData.vehicleModel} />
-                  <InfoItem label="Driver's License" value={driverData.driverLicense} />
-                  <InfoItem label="Address" value={driverData.address} />
+                  <InfoItem label="Full Name" value={userData?.fullName || ""} />
+                  <InfoItem label="Registration Number" value={userData?.registrationNumber || ""} />
+                  <InfoItem label="Phone Number" value={userData?.phoneNumber || ""} />
+                  <InfoItem label="NIN" value={userData?.nin || ""} />
+                  <InfoItem label="Vehicle Model" value={userData?.vehicleModel || ""} />
+                  <InfoItem label="Driver's License" value={userData?.driverLicense || ""} />
+                  <InfoItem label="Address" value={userData?.address || ""} />
                 </div>
               </CardContent>
             </Card>

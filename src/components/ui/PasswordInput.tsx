@@ -63,4 +63,5 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   );
 };
 
+// Default export for existing import statements
 export default PasswordInput;
