@@ -1,12 +1,16 @@
+
 import React, { useState } from "react";
 import { FormInput } from "./FormInput";
 import { PasswordInput } from "./PasswordInput";
+import { Button } from "@/components/ui/Button";
+import { Loader2 } from "lucide-react";
 
 interface LoginFormProps {
   onSubmit?: (data: { phoneNumber: string; password: string }) => void;
+  isLoading?: boolean;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = false }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,7 +22,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-[screen] w-full bg-white px-6 py-10">
+    <section className="flex flex-col items-center justify-center min-h-screen w-full bg-white px-6 py-10">
       <div className="flex flex-col items-center gap-[37px] w-full max-w-[591px]">
         <header className="flex flex-col items-start gap-4 w-full">
           <h1 className="w-full text-black text-center text-[32px] font-bold leading-[64px] max-md:text-[28px] max-md:leading-[48px] max-sm:text-2xl max-sm:leading-9">
@@ -43,6 +47,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               />
               
               <PasswordInput
+                label="Password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -53,13 +58,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           </div>
           
           <div className="flex flex-col items-center gap-4 w-full">
-            <button 
+            <Button 
               type="submit"
-              className="h-20 w-full bg-[#006400] text-white text-xl font-bold rounded-3xl max-sm:h-[60px] hover:bg-[#005200] transition-colors"
+              variant="primary"
+              disabled={isLoading}
+              className="h-20 w-full text-xl font-bold rounded-3xl max-sm:h-[60px]"
               aria-label="Sign Up"
             >
-              Sign Up
-            </button>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Signing In...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </Button>
           </div>
         </form>
       </div>
