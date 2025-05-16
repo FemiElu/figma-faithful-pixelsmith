@@ -43,7 +43,7 @@ const CompleteSignup: React.FC = () => {
         localStorage.setItem("driver_auth", "true");
         localStorage.setItem("first_login", "true");
         
-        // Log in the user
+        // Log in the user - but don't navigate yet
         login(phoneNumber, password);
         
         // Show success message
@@ -52,7 +52,7 @@ const CompleteSignup: React.FC = () => {
           description: "Please set your new password.",
         });
         
-        // Navigate to password change screen
+        // Navigate directly to password change screen
         navigate("/change-password");
       } else {
         toast({
@@ -73,7 +73,7 @@ const CompleteSignup: React.FC = () => {
             Complete Your Sign Up Process
           </h1>
           <p className="w-full text-[#4B4B4B] text-center text-2xl font-normal leading-[38.16px] max-md:text-xl max-sm:text-lg">
-            Login to complete your registration and experience other opportunities
+            Enter your details to complete your registration
           </p>
         </header>
         
