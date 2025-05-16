@@ -43,7 +43,7 @@ const CompleteSignup: React.FC = () => {
         localStorage.setItem("driver_auth", "true");
         localStorage.setItem("first_login", "true");
         
-        // Log in the user - but don't navigate yet
+        // Log in the user - this is required to set the auth context
         login(phoneNumber, password);
         
         // Show success message
@@ -73,7 +73,7 @@ const CompleteSignup: React.FC = () => {
             Complete Your Sign Up Process
           </h1>
           <p className="w-full text-[#4B4B4B] text-center text-2xl font-normal leading-[38.16px] max-md:text-xl max-sm:text-lg">
-            Enter your details to complete your registration
+            Enter your phone number and one-time password to continue
           </p>
         </header>
         

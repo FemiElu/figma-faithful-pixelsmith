@@ -1,12 +1,11 @@
 
 import React, { useState, useContext } from "react";
-import { Sidebar } from "@/components/layout/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/Button";
 import { Loader2, Upload, Lock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "@/hooks/use-toast";
-import PasswordInput from "@/components/ui/PasswordInput";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { AuthContext } from "@/context/AuthContext";
 
 const Account: React.FC = () => {
@@ -114,142 +113,140 @@ const Account: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#F9F9F9]">
-      <div className="flex flex-col md:flex-row">
-        <Sidebar />
-        <main className="flex-1 px-4 py-6 md:pl-[42px] md:pr-[27px] md:pt-[83px] md:pb-0">
-          <h1 className="text-3xl font-bold mb-6">Account Information</h1>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Profile Section */}
-            <Card className="shadow-md">
-              <CardHeader>
-                <CardTitle>Profile</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col items-center gap-6">
-                <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden relative flex items-center justify-center">
-                  {userData?.profileImage ? (
-                    <img 
-                      src={userData.profileImage} 
-                      alt="Profile" 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="text-6xl text-gray-400">
-                      {userData?.fullName ? userData.fullName.charAt(0) : "U"}
-                    </div>
-                  )}
+    <div className="w-full">
+      <h1 className="text-3xl font-bold mb-6">Account Information</h1>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Profile Section */}
+        <Card className="shadow-md">
+          <CardHeader>
+            <CardTitle>Profile</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-6">
+            <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden relative flex items-center justify-center">
+              {userData?.profileImage ? (
+                <img 
+                  src={userData.profileImage} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="text-6xl text-gray-400">
+                  {userData?.fullName ? userData.fullName.charAt(0) : "U"}
                 </div>
-                
-                <div className="w-full">
-                  <label className="relative w-full">
-                    <input 
-                      type="file" 
-                      accept="image/png, image/jpeg, image/jpg" 
-                      className="hidden"
-                      onChange={handleImageUpload}
-                      disabled={isUploading}
-                    />
-                    <Button 
-                      variant="primary" 
-                      className="w-full flex items-center justify-center gap-2"
-                      disabled={isUploading}
-                    >
-                      {isUploading ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Uploading...
-                        </>
-                      ) : (
-                        <>
-                          <Upload className="h-5 w-5" />
-                          Upload Profile Image
-                        </>
-                      )}
-                    </Button>
-                  </label>
-                </div>
-                
-                <div className="w-full">
-                  <Button 
-                    variant="outline" 
-                    className="w-full flex items-center justify-center gap-2"
-                    onClick={() => setShowPasswordChange(!showPasswordChange)}
-                  >
-                    <Lock className="h-5 w-5" />
-                    Change Password
-                  </Button>
-                </div>
-                
-                {showPasswordChange && (
-                  <form onSubmit={handlePasswordChange} className="w-full space-y-4 mt-4">
-                    <PasswordInput
-                      label="Current Password"
-                      placeholder="Enter current password"
-                      value={currentPassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
-                      required
-                    />
-                    
-                    <PasswordInput
-                      label="New Password"
-                      placeholder="Enter new password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      required
-                    />
-                    
-                    <PasswordInput
-                      label="Confirm New Password"
-                      placeholder="Confirm your new password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
-                    
-                    {passwordError && (
-                      <p className="text-red-500 text-sm">{passwordError}</p>
-                    )}
-                    
-                    <Button 
-                      type="submit" 
-                      variant="primary"
-                      className="w-full"
-                      disabled={isChangingPassword}
-                    >
-                      {isChangingPassword ? (
-                        <>
-                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          Updating...
-                        </>
-                      ) : (
-                        "Update Password"
-                      )}
-                    </Button>
-                  </form>
-                )}
-              </CardContent>
-            </Card>
+              )}
+            </div>
             
-            {/* Driver Information */}
-            <Card className="shadow-md">
-              <CardHeader>
-                <CardTitle>Driver Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 gap-4">
-                  <InfoItem label="Full Name" value={userData?.fullName || ""} />
-                  <InfoItem label="Registration Number" value={userData?.registrationNumber || ""} />
-                  <InfoItem label="Phone Number" value={userData?.phoneNumber || ""} />
-                  <InfoItem label="NIN" value={userData?.nin || ""} />
-                  <InfoItem label="Vehicle Model" value={userData?.vehicleModel || ""} />
-                  <InfoItem label="Driver's License" value={userData?.driverLicense || ""} />
-                  <InfoItem label="Address" value={userData?.address || ""} />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </main>
+            <div className="w-full">
+              <label className="relative w-full cursor-pointer">
+                <input 
+                  type="file" 
+                  accept="image/png, image/jpeg, image/jpg" 
+                  className="hidden"
+                  onChange={handleImageUpload}
+                  disabled={isUploading}
+                />
+                <Button 
+                  variant="primary" 
+                  className="w-full flex items-center justify-center gap-2 cursor-pointer"
+                  disabled={isUploading}
+                >
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-5 w-5" />
+                      Upload Profile Image
+                    </>
+                  )}
+                </Button>
+              </label>
+            </div>
+            
+            <div className="w-full">
+              <Button 
+                variant="outline" 
+                className="w-full flex items-center justify-center gap-2"
+                onClick={() => setShowPasswordChange(!showPasswordChange)}
+              >
+                <Lock className="h-5 w-5" />
+                Change Password
+              </Button>
+            </div>
+            
+            {showPasswordChange && (
+              <form onSubmit={handlePasswordChange} className="w-full space-y-4 mt-4">
+                <PasswordInput
+                  id="current-password"
+                  label="Current Password"
+                  placeholder="Enter current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  required
+                />
+                
+                <PasswordInput
+                  id="new-password-account"
+                  label="New Password"
+                  placeholder="Enter new password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                />
+                
+                <PasswordInput
+                  id="confirm-password-account"
+                  label="Confirm New Password"
+                  placeholder="Confirm your new password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+                
+                {passwordError && (
+                  <p className="text-red-500 text-sm">{passwordError}</p>
+                )}
+                
+                <Button 
+                  type="submit" 
+                  variant="primary"
+                  className="w-full"
+                  disabled={isChangingPassword}
+                >
+                  {isChangingPassword ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Updating...
+                    </>
+                  ) : (
+                    "Update Password"
+                  )}
+                </Button>
+              </form>
+            )}
+          </CardContent>
+        </Card>
+        
+        {/* Driver Information */}
+        <Card className="shadow-md">
+          <CardHeader>
+            <CardTitle>Driver Information</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 gap-4">
+              <InfoItem label="Full Name" value={userData?.fullName || ""} />
+              <InfoItem label="Registration Number" value={userData?.registrationNumber || ""} />
+              <InfoItem label="Phone Number" value={userData?.phoneNumber || ""} />
+              <InfoItem label="NIN" value={userData?.nin || ""} />
+              <InfoItem label="Vehicle Model" value={userData?.vehicleModel || ""} />
+              <InfoItem label="Driver's License" value={userData?.driverLicense || ""} />
+              <InfoItem label="Address" value={userData?.address || ""} />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

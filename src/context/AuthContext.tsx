@@ -76,6 +76,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
   
   const login = (phoneNumber: string, password: string): boolean => {
+    // Check if this is a new signup with OTP
+    const isNewSignup = localStorage.getItem("first_login") === "true";
+    
     // Get stored credentials
     const storedCredentials = localStorage.getItem("driver_credentials");
     
@@ -117,6 +120,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch (error) {
         console.error("Error parsing credentials:", error);
       }
+    } else if (isNewSignup) {
+      // For new signup without existing credentials, we use the OTP flow
+      // The auth state is set in the CompleteSignup component
+      setIsAuthenticated(true);
+      
+      // Load user data if available
+      const storedUserData = localStorage.getItem("driver_user_data");
+      if (storedUserData) {
+        try {
+          setUserData(JSON.parse(storedUserData));
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+        }
+      }
+      
+      return true;
     }
     
     return false;

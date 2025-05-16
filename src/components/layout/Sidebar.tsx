@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { RouteIcon } from "../icons/RouteIcon";
 import { MoneyIcon } from "../icons/MoneyIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -9,12 +9,13 @@ import { MenuIcon } from "../icons/MenuIcon";
 import { AuthContext } from "@/context/AuthContext";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Settings, LogOut } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
   const path = location.pathname;
   const isMobile = useIsMobile();
-  const { logout } = useContext(AuthContext);
+  const { logout, userData } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const SidebarContent = () => (
@@ -52,8 +53,19 @@ export const Sidebar: React.FC = () => {
   // User profile dropdown
   const UserDropdown = () => (
     <DropdownMenu>
-      <DropdownMenuTrigger className="h-10 w-10 rounded-full bg-white border-2 border-[#006400] flex items-center justify-center text-[#006400] font-bold">
-        JD
+      <DropdownMenuTrigger className="outline-none focus:outline-none">
+        <Avatar className="h-10 w-10 border-2 border-[#006400]">
+          {userData?.profileImage ? (
+            <AvatarImage 
+              src={userData.profileImage} 
+              alt={userData.fullName || "User"}
+            />
+          ) : (
+            <AvatarFallback className="bg-white text-[#006400] font-semibold">
+              {userData?.fullName ? userData.fullName.charAt(0) : "U"}
+            </AvatarFallback>
+          )}
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onClick={() => navigate("/account")} className="cursor-pointer">
@@ -94,16 +106,12 @@ export const Sidebar: React.FC = () => {
 
   return (
     <>
-      <aside className="w-[304px] min-h-screen bg-gradient-to-b from-[#000000] to-[#006400] py-[52px]">
+      <aside className="w-[304px] bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] h-full">
         <div className="text-white text-4xl font-medium mb-[35px] text-center">
           Movaa
         </div>
         <SidebarContent />
       </aside>
-      
-      <div className="absolute top-6 right-8">
-        <UserDropdown />
-      </div>
     </>
   );
 };

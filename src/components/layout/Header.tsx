@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 import { ChevronDown, LogOut, User } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export const Header: React.FC = () => {
   const { userData, logout } = useContext(AuthContext);
@@ -51,19 +52,18 @@ export const Header: React.FC = () => {
           aria-expanded={isDropdownOpen}
           aria-controls="user-dropdown"
         >
-          <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+          <Avatar className="w-10 h-10 border-2 border-[#006400]">
             {userData?.profileImage ? (
-              <img 
+              <AvatarImage 
                 src={userData.profileImage} 
-                alt="Profile" 
-                className="w-full h-full object-cover"
+                alt={userData.fullName || "User"}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500">
+              <AvatarFallback className="bg-white text-[#006400] font-semibold">
                 {userData?.fullName ? userData.fullName.charAt(0) : "U"}
-              </div>
+              </AvatarFallback>
             )}
-          </div>
+          </Avatar>
           <ChevronDown size={16} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
         </button>
         
