@@ -34,11 +34,11 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 md:gap-5 mb-6">
-      <div className="inline-flex items-center border bg-white p-2 rounded-lg border-[#C7C7C7] w-full md:w-auto">
+    <div className="flex flex-col gap-4 mb-6">
+      <div className="inline-flex items-center border bg-white p-2 rounded-lg border-[#C7C7C7] w-full">
         <button
           onClick={() => handleTabChange("live")}
-          className={`text-base font-medium px-4 md:px-[46px] py-3 md:py-4 rounded-lg flex-1 md:flex-none ${
+          className={`text-base font-medium px-4 py-3 rounded-lg flex-1 ${
             activeTab === "live"
               ? "bg-[#006400] text-white"
               : "bg-white text-[#8A8A8A]"
@@ -48,7 +48,7 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
         </button>
         <button
           onClick={() => handleTabChange("past")}
-          className={`text-base font-medium px-4 md:px-[46px] py-3 md:py-4 rounded-lg flex-1 md:flex-none ${
+          className={`text-base font-medium px-4 py-3 rounded-lg flex-1 ${
             activeTab === "past"
               ? "bg-[#006400] text-white"
               : "bg-white text-[#8A8A8A]"
@@ -60,8 +60,8 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
       
       <Popover>
         <PopoverTrigger asChild>
-          <button className="flex w-full md:w-[435px] h-[58px] md:h-[74px] items-center justify-between border bg-white px-4 py-2 rounded-lg border-[#D9D9D9]">
-            <span className="text-[#6B7280] text-base md:text-xl">
+          <button className="flex w-full h-[58px] items-center justify-between border bg-white px-4 py-2 rounded-lg border-[#D9D9D9]">
+            <span className="text-[#6B7280] text-base">
               {date ? format(date, "MM/dd/yyyy") : "Select date"}
             </span>
             <CalendarIcon />

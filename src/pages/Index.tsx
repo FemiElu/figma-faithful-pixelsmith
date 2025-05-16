@@ -16,8 +16,8 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-[11px] mb-10">
+    <div className="w-full pt-12 md:pt-0">
+      <section className="grid grid-cols-1 gap-4 mb-10">
         <TripStatCard
           title="Total No Of Trip"
           value="200"

@@ -45,73 +45,30 @@ export const Sidebar: React.FC = () => {
     </nav>
   );
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
-  // User profile dropdown
-  const UserDropdown = () => (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none focus:outline-none">
-        <Avatar className="h-10 w-10 border-2 border-[#006400]">
-          {userData?.profileImage ? (
-            <AvatarImage 
-              src={userData.profileImage} 
-              alt={userData.fullName || "User"}
-            />
-          ) : (
-            <AvatarFallback className="bg-white text-[#006400] font-semibold">
-              {userData?.fullName ? userData.fullName.charAt(0) : "U"}
-            </AvatarFallback>
-          )}
-        </Avatar>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuItem onClick={() => navigate("/account")} className="cursor-pointer">
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Account</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-500 focus:text-red-500">
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Logout</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-
   if (isMobile) {
     return (
-      <>
-        <div className="flex justify-between items-center w-full p-4 bg-white">
-          <Drawer>
-            <DrawerTrigger className="text-black">
-              <MenuIcon />
-            </DrawerTrigger>
-            <DrawerContent className="p-0">
-              <div className="w-full bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] min-h-[50vh]">
-                <div className="text-white text-4xl font-medium mb-[35px] text-center">
-                  Movaa
-                </div>
-                <SidebarContent />
-              </div>
-            </DrawerContent>
-          </Drawer>
-          
-          <UserDropdown />
-        </div>
-      </>
+      <Drawer>
+        <DrawerTrigger className="text-black absolute top-6 left-4">
+          <MenuIcon />
+        </DrawerTrigger>
+        <DrawerContent className="p-0">
+          <div className="w-full bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] min-h-[50vh]">
+            <div className="text-white text-4xl font-medium mb-[35px] text-center">
+              Movaa
+            </div>
+            <SidebarContent />
+          </div>
+        </DrawerContent>
+      </Drawer>
     );
   }
 
   return (
-    <>
-      <aside className="w-[304px] bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] h-full">
-        <div className="text-white text-4xl font-medium mb-[35px] text-center">
-          Movaa
-        </div>
-        <SidebarContent />
-      </aside>
-    </>
+    <aside className="w-[304px] bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] h-full">
+      <div className="text-white text-4xl font-medium mb-[35px] text-center">
+        Movaa
+      </div>
+      <SidebarContent />
+    </aside>
   );
 };
