@@ -7,16 +7,17 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { MenuIcon } from "../icons/MenuIcon";
 import { AuthContext } from "@/context/AuthContext";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Settings, LogOut } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
   const path = location.pathname;
   const isMobile = useIsMobile();
-  const { logout, userData } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
 
   const SidebarContent = () => (
     <nav className="flex flex-col gap-6">
@@ -53,7 +54,10 @@ export const Sidebar: React.FC = () => {
         </DrawerTrigger>
         <DrawerContent className="p-0">
           <div className="w-full bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] min-h-[50vh]">
-            <div className="text-white text-4xl font-medium mb-[35px] text-center">
+            <div 
+              className="text-white text-4xl font-medium mb-[35px] text-center cursor-pointer" 
+              onClick={handleLogoClick}
+            >
               Movaa
             </div>
             <SidebarContent />
@@ -64,8 +68,11 @@ export const Sidebar: React.FC = () => {
   }
 
   return (
-    <aside className="w-[304px] bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] h-full">
-      <div className="text-white text-4xl font-medium mb-[35px] text-center">
+    <aside className="w-[304px] bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] h-screen">
+      <div 
+        className="text-white text-4xl font-medium mb-[35px] text-center cursor-pointer" 
+        onClick={handleLogoClick}
+      >
         Movaa
       </div>
       <SidebarContent />

@@ -6,10 +6,13 @@ import { TripDetailCard } from "@/components/trips/TripDetailCard";
 import { FilmstripIcon } from "@/components/icons/FilmstripIcon";
 import { TurnIcon } from "@/components/icons/TurnIcon";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 const Index: React.FC = () => {
   const [filter, setFilter] = useState({ type: "live", date: new Date().toLocaleDateString('en-US') });
   const isMobile = useIsMobile();
+  const { userData } = useContext(AuthContext);
 
   const handleFilterChange = (newFilter: { type: string; date: string }) => {
     setFilter(newFilter);
@@ -17,7 +20,13 @@ const Index: React.FC = () => {
 
   return (
     <div className="w-full pt-12 md:pt-0">
-      <section className="grid grid-cols-1 gap-4 mb-10">
+      {!isMobile && (
+        <h2 className="text-2xl font-semibold mb-6 text-[#006400]">
+          Welcome, {userData?.fullName || "Driver"}
+        </h2>
+      )}
+      
+      <section className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-4 mb-10`}>
         <TripStatCard
           title="Total No Of Trip"
           value="200"

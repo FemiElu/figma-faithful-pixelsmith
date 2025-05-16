@@ -3,7 +3,7 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
-import { ChevronDown, LogOut, User } from "lucide-react";
+import { Bell, ChevronDown, LogOut, User } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -45,8 +45,14 @@ export const Header: React.FC = () => {
   return (
     <header className={`${isMobile ? 'h-[60px]' : 'h-[80px]'} flex items-center justify-between px-4 md:px-8 bg-white shadow-sm`}>
       <div className="text-3xl font-bold text-[#006400]">
-        {!isMobile && "Movaa"}
+        {!isMobile && ""}
       </div>
+      
+      {!isMobile && (
+        <div className="flex items-center gap-4 mr-auto">
+          <Bell size={24} className="text-gray-600 cursor-pointer" />
+        </div>
+      )}
       
       <div className="relative ml-auto" ref={dropdownRef}>
         <button

@@ -17,7 +17,7 @@ export const ProfileSection = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const { isUploading, handleImageUpload } = useProfileImage();
+  const { isUploading, handleImageUpload, fileInputRef, triggerFileInput } = useProfileImage();
   
   const handlePasswordChange = (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,33 +79,33 @@ export const ProfileSection = () => {
         </div>
         
         <div className="w-full">
-          <label className="relative w-full cursor-pointer">
-            <input 
-              type="file" 
-              accept="image/png, image/jpeg, image/jpg" 
-              className="hidden"
-              onChange={handleImageUpload}
-              disabled={isUploading}
-            />
-            <Button 
-              variant="primary" 
-              className="w-full flex items-center justify-center gap-2 cursor-pointer"
-              disabled={isUploading}
-              type="button"
-            >
-              {isUploading ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <Upload className="h-5 w-5" />
-                  Upload Profile Image
-                </>
-              )}
-            </Button>
-          </label>
+          <input 
+            type="file" 
+            ref={fileInputRef}
+            accept="image/png, image/jpeg, image/jpg" 
+            className="hidden"
+            onChange={handleImageUpload}
+            disabled={isUploading}
+          />
+          <Button 
+            variant="primary" 
+            className="w-full flex items-center justify-center gap-2 cursor-pointer"
+            disabled={isUploading}
+            onClick={triggerFileInput}
+            type="button"
+          >
+            {isUploading ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Uploading...
+              </>
+            ) : (
+              <>
+                <Upload className="h-5 w-5" />
+                Upload Profile Image
+              </>
+            )}
+          </Button>
         </div>
         
         <div className="w-full">

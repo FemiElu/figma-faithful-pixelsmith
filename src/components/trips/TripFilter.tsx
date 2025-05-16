@@ -34,8 +34,8 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 mb-6">
-      <div className="inline-flex items-center border bg-white p-2 rounded-lg border-[#C7C7C7] w-full">
+    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row justify-between'} gap-4 mb-6`}>
+      <div className={`inline-flex items-center border bg-white p-2 rounded-lg border-[#C7C7C7] ${isMobile ? 'w-full' : 'w-[340px]'}`}>
         <button
           onClick={() => handleTabChange("live")}
           className={`text-base font-medium px-4 py-3 rounded-lg flex-1 ${
@@ -60,7 +60,7 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
       
       <Popover>
         <PopoverTrigger asChild>
-          <button className="flex w-full h-[58px] items-center justify-between border bg-white px-4 py-2 rounded-lg border-[#D9D9D9]">
+          <button className={`flex ${isMobile ? 'w-full' : 'w-[240px]'} h-[58px] items-center justify-between border bg-white px-4 py-2 rounded-lg border-[#D9D9D9]`}>
             <span className="text-[#6B7280] text-base">
               {date ? format(date, "MM/dd/yyyy") : "Select date"}
             </span>

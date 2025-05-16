@@ -1,11 +1,12 @@
 
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { toast } from "@/hooks/use-toast";
 
 export const useProfileImage = () => {
   const { updateProfileImage } = useContext(AuthContext);
   const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -59,8 +60,16 @@ export const useProfileImage = () => {
     };
   };
 
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return {
     isUploading,
     handleImageUpload,
+    fileInputRef,
+    triggerFileInput
   };
 };
