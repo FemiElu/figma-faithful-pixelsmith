@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,21 +28,22 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 w-full">
       {label && (
-        <label htmlFor={id} className="text-[#131313] text-xl font-semibold">
+        <label htmlFor={id} className="text-[#131313] text-base md:text-xl font-semibold">
           {label}
         </label>
       )}
-      <div className="flex h-20 items-center border border-neutral-400 bg-white px-5 rounded-3xl">
+      <div className="flex h-16 md:h-20 items-center border border-neutral-400 bg-white px-3 md:px-5 rounded-2xl w-full">
         <input
           id={id}
           name={name}
           type={showPassword ? "text" : "password"}
           placeholder={placeholder}
-          className="w-full text-[#7A7A7A] text-lg outline-none"
+          className="flex-1 min-w-0 w-full text-[#7A7A7A] text-base md:text-lg outline-none bg-transparent"
           value={value}
           onChange={onChange}
+          autoComplete="current-password"
           {...props}
         />
         <button
