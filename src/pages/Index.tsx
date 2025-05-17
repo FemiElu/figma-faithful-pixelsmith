@@ -20,11 +20,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="w-full pt-12 md:pt-0">
-      {!isMobile && (
-        <h2 className="text-2xl font-semibold mb-6 text-[#006400]">
-          Welcome, {userData?.fullName || "Driver"}
-        </h2>
-      )}
+      
       
       <section className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-4 mb-10`}>
         <TripStatCard
