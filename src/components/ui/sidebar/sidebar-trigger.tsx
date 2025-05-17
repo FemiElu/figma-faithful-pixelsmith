@@ -1,10 +1,10 @@
 
 import * as React from "react"
-import { PanelLeft } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button"
 import { useSidebar } from "./context"
+import { MenuIcon } from "@/components/icons/MenuIcon"
 
 export const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
@@ -25,7 +25,7 @@ export const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <PanelLeft />
+      <MenuIcon />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

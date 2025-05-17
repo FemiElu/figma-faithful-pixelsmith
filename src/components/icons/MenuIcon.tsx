@@ -1,7 +1,12 @@
 
 import React from "react";
 
-export const MenuIcon: React.FC = () => {
+interface MenuIconProps {
+  className?: string;
+  onClick?: () => void;
+}
+
+export const MenuIcon: React.FC<MenuIconProps> = ({ className = "w-6 h-6", onClick }) => {
   return (
     <svg
       width="24"
@@ -9,7 +14,8 @@ export const MenuIcon: React.FC = () => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-6 h-6"
+      className={className}
+      onClick={onClick}
     >
       <path
         d="M3 12H21"

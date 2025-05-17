@@ -49,7 +49,7 @@ export const Sidebar: React.FC = () => {
   if (isMobile) {
     return (
       <Drawer>
-        <DrawerTrigger className="text-black absolute top-6 left-4">
+        <DrawerTrigger className="text-black fixed top-6 left-4 z-50">
           <MenuIcon />
         </DrawerTrigger>
         <DrawerContent className="p-0">
