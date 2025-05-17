@@ -17,8 +17,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Account from "./pages/Account";
 import { MainLayout } from "./components/layout/MainLayout";
 
-const queryClient = new QueryClient();
-
 // Protected route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isFirstLogin } = useContext(AuthContext);
@@ -34,7 +32,47 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+// Route guard for authenticated/unauthenticated access
+const RouteGuard = ({ 
+  children, 
+  accessibleWhenAuthenticated = true 
+}: { 
+  children: React.ReactNode;
+  accessibleWhenAuthenticated?: boolean;
+}) => {
+  const { isAuthenticated, isFirstLogin } = useContext(AuthContext);
+
+  if (accessibleWhenAuthenticated && !isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!accessibleWhenAuthenticated && isAuthenticated) {
+    return <Navigate to={isFirstLogin ? "/change-password" : "/"} />;
+  }
+
+  return <>{children}</>;
+};
+
+// Route that requires authentication + first login
+const FirstLoginRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated, isFirstLogin } = useContext(AuthContext);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!isFirstLogin) {
+    return <Navigate to="/" />;
+  }
+
+  return <>{children}</>;
+};
+
+// Create the query client INSIDE the component
 const App = () => {
+  // Create a client
+  const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
@@ -108,42 +146,6 @@ const App = () => {
       </AuthProvider>
     </QueryClientProvider>
   );
-};
-
-// Route guard for authenticated/unauthenticated access
-const RouteGuard = ({ 
-  children, 
-  accessibleWhenAuthenticated = true 
-}: { 
-  children: React.ReactNode;
-  accessibleWhenAuthenticated?: boolean;
-}) => {
-  const { isAuthenticated, isFirstLogin } = useContext(AuthContext);
-
-  if (accessibleWhenAuthenticated && !isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
-
-  if (!accessibleWhenAuthenticated && isAuthenticated) {
-    return <Navigate to={isFirstLogin ? "/change-password" : "/"} />;
-  }
-
-  return <>{children}</>;
-};
-
-// Route that requires authentication + first login
-const FirstLoginRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isFirstLogin } = useContext(AuthContext);
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
-
-  if (!isFirstLogin) {
-    return <Navigate to="/" />;
-  }
-
-  return <>{children}</>;
 };
 
 export default App;
