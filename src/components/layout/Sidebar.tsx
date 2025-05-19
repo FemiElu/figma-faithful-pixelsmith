@@ -49,8 +49,8 @@ export const Sidebar: React.FC = () => {
   if (isMobile) {
     return (
       <Drawer>
-        <DrawerTrigger className="text-black fixed top-6 left-4 z-50">
-          <MenuIcon />
+        <DrawerTrigger className="fixed top-5 left-4 z-50 block md:hidden">
+          <MenuIcon className="text-[#006400]" />
         </DrawerTrigger>
         <DrawerContent className="p-0">
           <div className="w-full bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] min-h-[50vh]">

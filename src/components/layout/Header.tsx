@@ -1,3 +1,4 @@
+
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
@@ -43,9 +44,14 @@ export const Header: React.FC = () => {
 
   return (
     <header className={`${isMobile ? 'h-[60px]' : 'h-[80px]'} flex items-center justify-between px-4 md:px-8 bg-white shadow-sm`}>
-      <div className="text-3xl font-bold text-[#006400]">
+      <div className="flex items-center">
+        {/* Movaa brand name, visible on all screens */}
+        <h1 className="text-2xl font-bold text-[#006400] ml-8 md:ml-0">
+          Movaa
+        </h1>
+        
         {!isMobile && (
-          <h2 className="text-2xl font-semibold mb-0 text-[#006400]">
+          <h2 className="text-lg font-semibold ml-8 text-gray-700">
             Welcome, {userData?.fullName || "Driver"}
           </h2>
         )}

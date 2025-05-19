@@ -19,7 +19,7 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
     setActiveTab(tab);
     onFilterChange?.({ 
       type: tab, 
-      date: date ? format(date, "MM/dd/yyyy") : "" 
+      date: date ? date.toISOString() : new Date().toISOString()
     });
   };
 
@@ -28,7 +28,7 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
     if (newDate) {
       onFilterChange?.({ 
         type: activeTab, 
-        date: format(newDate, "MM/dd/yyyy") 
+        date: newDate.toISOString()
       });
     }
   };
@@ -73,6 +73,7 @@ export const TripFilter: React.FC<TripFilterProps> = ({ onFilterChange }) => {
             selected={date}
             onSelect={handleDateSelect}
             initialFocus
+            className="pointer-events-auto"
           />
         </PopoverContent>
       </Popover>
