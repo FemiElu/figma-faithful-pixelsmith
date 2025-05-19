@@ -3,9 +3,10 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
-import { Bell, ChevronDown, LogOut, User } from "lucide-react";
+import { Bell, ChevronDown, LogOut, User, Menu } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export const Header: React.FC = () => {
   const { userData, logout } = useContext(AuthContext);
@@ -13,6 +14,7 @@ export const Header: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { toggleSidebar } = useSidebar();
   
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -45,8 +47,20 @@ export const Header: React.FC = () => {
   return (
     <header className={`${isMobile ? 'h-[60px]' : 'h-[80px]'} flex items-center justify-between px-4 md:px-8 bg-white shadow-sm`}>
       <div className="flex items-center">
+        {isMobile && (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="mr-2" 
+            onClick={toggleSidebar}
+            aria-label="Toggle menu"
+          >
+            <Menu className="h-6 w-6 text-[#006400]" />
+          </Button>
+        )}
+        
         {/* Movaa brand name, visible on all screens */}
-        <h1 className="text-2xl font-bold text-[#006400] ml-8 md:ml-0">
+        <h1 className="text-2xl font-bold text-[#006400]">
           Movaa
         </h1>
         

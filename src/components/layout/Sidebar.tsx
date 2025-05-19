@@ -7,6 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { MenuIcon } from "../icons/MenuIcon";
 import { AuthContext } from "@/context/AuthContext";
+import { useSidebar } from "@/components/ui/sidebar/context";
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ export const Sidebar: React.FC = () => {
   const isMobile = useIsMobile();
   const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { openMobile, setOpenMobile } = useSidebar();
 
   const handleLogoClick = () => {
     navigate("/");
@@ -28,6 +30,7 @@ export const Sidebar: React.FC = () => {
             ? "bg-white text-[#006400] rounded-[12px_0px_0px_12px]" 
             : "text-white"
         }`}
+        onClick={() => isMobile && setOpenMobile(false)}
       >
         <RouteIcon />
         <span>Trips</span>
@@ -39,6 +42,7 @@ export const Sidebar: React.FC = () => {
             ? "bg-white text-[#006400] rounded-[12px_0px_0px_12px]" 
             : "text-white"
         }`}
+        onClick={() => isMobile && setOpenMobile(false)}
       >
         <MoneyIcon />
         <span>Earnings</span>
@@ -48,10 +52,7 @@ export const Sidebar: React.FC = () => {
 
   if (isMobile) {
     return (
-      <Drawer>
-        <DrawerTrigger className="fixed top-5 left-4 z-50 block md:hidden">
-          <MenuIcon className="text-[#006400]" />
-        </DrawerTrigger>
+      <Drawer open={openMobile} onOpenChange={setOpenMobile}>
         <DrawerContent className="p-0">
           <div className="w-full bg-gradient-to-b from-[#000000] to-[#006400] py-[52px] min-h-[50vh]">
             <div 
